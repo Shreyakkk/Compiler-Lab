@@ -1,0 +1,39 @@
+%{
+#include<stdio.h>
+                                                                                                                                                                                          
+int word=0;
+int id=0;
+int key=0;
+                                                                                                                                                                                          
+%}
+                                                                                                                                                                                          
+numerical [0-9]
+                                                                                                                                                                                          
+operator [\+\=\-\*\%\/]
+identifier [a-zA-Z][a-zA-Z0-9_]*
+punctuation [\,\:\;\(\)\{\}]
+                                                                                                                                                                                          
+%%
+                                                                                                                                                                                          
+{numerical}+ { printf("<Numerical, %s >",yytext);word++;}
+int|for|while|double|char|main|if|do { printf("<Keyword, %s >",yytext);word++;key++;}
+{operator} { printf("<op, %s >",yytext);}
+{identifier} {printf("<identifier, %s>",yytext);word++;id++; }
+{punctuation} { printf("<punctuation, %s >",yytext);}
+                                                                                                                                                                                          
+%%
+                                                                                                                                                                                          
+int main()
+{
+        yylex();
+        printf("<No of words: %d>",word);
+        printf("<No of identifiers: %d>",id);
+        printf("<No of keywords: %d>",key);
+                                                                                                                                                                                          
+                                                                                                                                                                                          
+        yywrap();
+}
+                                                                                                                                                                                          
+int yywrap(){
+        return 1;
+}
